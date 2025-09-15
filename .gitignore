@@ -1,16 +1,22 @@
 # Visual Studio
 .vs/
-bin/
-obj/
 *.user
 *.suo
 *.cache
-*.pdb
 *.log
 
-# .NET
-*.dll
+# Build output
+bin/
+obj/
 *.exe
+*.dll
+*.pdb
+
+# Database files
 *.db
 *.db-shm
 *.db-wal
+
+# Others
+*.zip
+*.tar.gz
