@@ -35,8 +35,11 @@ builder.Services.AddScoped<AdminSeeder>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 39)) // verzija MySQL-a
-    ));
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+        mySqlOptions => mySqlOptions.EnableRetryOnFailure() // retry za transient greške
+    )
+);
+
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -154,6 +157,13 @@ builder.Services.AddSwaggerGen(option =>
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.EnsureCreated(); // kreira tabele u Railway MySQL
+}
+
 
 
 using (var scope = app.Services.CreateScope())
