@@ -36,7 +36,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
-        mySqlOptions => mySqlOptions.EnableRetryOnFailure() // retry za transient greške
+        mySqlOptions => mySqlOptions.EnableRetryOnFailure() 
     )
 );
 
@@ -158,11 +158,11 @@ builder.Services.AddSwaggerGen(option =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated(); // kreira tabele u Railway MySQL
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//    dbContext.Database.EnsureCreated(); // kreira tabele u Railway MySQL
+//}
 
 
 
