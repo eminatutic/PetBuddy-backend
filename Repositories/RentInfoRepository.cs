@@ -85,6 +85,7 @@ namespace api.Repositories
         {
             var specialPackage = await _context.SpecialPackages
                 .Include(sp => sp.SpecialPackagePets)
+                    .ThenInclude(spp => spp.Pet)
                 .FirstOrDefaultAsync(sp => sp.Id == packageId);
 
             if (specialPackage == null)
@@ -94,8 +95,14 @@ namespace api.Repositories
 
             specialPackage.IsDeleted = true;
 
-
-
+            
+            foreach (var spp in specialPackage.SpecialPackagePets)
+            {
+                if (spp.Pet != null)
+                {
+                    spp.Pet.Status = false;
+                }
+            }
 
             var rent = _mapper.Map<RentInfo>(rentDTO);
             rent.UserId = userId;

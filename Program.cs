@@ -45,7 +45,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequiredLength = 5;
-    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireNonAlphanumeric = true;
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = true;
 })
@@ -161,7 +161,7 @@ var app = builder.Build();
 //using (var scope = app.Services.CreateScope())
 //{
 //    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//    dbContext.Database.EnsureCreated(); // kreira tabele u Railway MySQL
+//    dbContext.Database.EnsureCreated(); 
 //}
 
 
